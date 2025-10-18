@@ -1,0 +1,376 @@
+// !$*UTF8*$!
+{
+	archiveVersion = 1;
+	classes = {
+	};
+	objectVersion = 56;
+	objects = {
+
+/* Begin PBXBuildFile section */
+		55A8515F2EA3DB23005C9A66 /* NotificationService.swift in Sources */ = {isa = PBXBuildFile; fileRef = 55A851482EA3DB23005C9A66 /* NotificationService.swift */; };
+		55A851602EA3DB23005C9A66 /* ActiveBlocksView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 55A8514E2EA3DB23005C9A66 /* ActiveBlocksView.swift */; };
+		55A851612EA3DB23005C9A66 /* AppSelectorView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 55A851502EA3DB23005C9A66 /* AppSelectorView.swift */; };
+		55A851622EA3DB23005C9A66 /* HomeView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 55A851522EA3DB23005C9A66 /* HomeView.swift */; };
+		55A851632EA3DB23005C9A66 /* EventConfiguration.swift in Sources */ = {isa = PBXBuildFile; fileRef = 55A851422EA3DB23005C9A66 /* EventConfiguration.swift */; };
+		55A851642EA3DB23005C9A66 /* UserSettings.swift in Sources */ = {isa = PBXBuildFile; fileRef = 55A851432EA3DB23005C9A66 /* UserSettings.swift */; };
+		55A851652EA3DB23005C9A66 /* DontBeLateApp.swift in Sources */ = {isa = PBXBuildFile; fileRef = 55A8515C2EA3DB23005C9A66 /* DontBeLateApp.swift */; };
+		55A851662EA3DB23005C9A66 /* CalendarService.swift in Sources */ = {isa = PBXBuildFile; fileRef = 55A851462EA3DB23005C9A66 /* CalendarService.swift */; };
+		55A851672EA3DB23005C9A66 /* UpcomingEventsView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 55A851582EA3DB23005C9A66 /* UpcomingEventsView.swift */; };
+		55A851682EA3DB23005C9A66 /* ContentView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 55A8515B2EA3DB23005C9A66 /* ContentView.swift */; };
+		55A851692EA3DB23005C9A66 /* NotificationPermissionBanner.swift in Sources */ = {isa = PBXBuildFile; fileRef = 55A851542EA3DB23005C9A66 /* NotificationPermissionBanner.swift */; };
+		55A8516A2EA3DB23005C9A66 /* AppBlockingService.swift in Sources */ = {isa = PBXBuildFile; fileRef = 55A851452EA3DB23005C9A66 /* AppBlockingService.swift */; };
+		55A8516B2EA3DB23005C9A66 /* AppState.swift in Sources */ = {isa = PBXBuildFile; fileRef = 55A851402EA3DB23005C9A66 /* AppState.swift */; };
+		55A8516C2EA3DB23005C9A66 /* OnboardingView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 55A851562EA3DB23005C9A66 /* OnboardingView.swift */; };
+		55A8516D2EA3DB23005C9A66 /* Event.swift in Sources */ = {isa = PBXBuildFile; fileRef = 55A851412EA3DB23005C9A66 /* Event.swift */; };
+		55A8516E2EA3DB23005C9A66 /* NotificationTestView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 55A851552EA3DB23005C9A66 /* NotificationTestView.swift */; };
+		55A8516F2EA3DB23005C9A66 /* LoadingView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 55A851532EA3DB23005C9A66 /* LoadingView.swift */; };
+		55A851702EA3DB23005C9A66 /* SettingsView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 55A851572EA3DB23005C9A66 /* SettingsView.swift */; };
+		55A851712EA3DB23005C9A66 /* BackgroundTaskManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 55A8514A2EA3DB23005C9A66 /* BackgroundTaskManager.swift */; };
+		55A851722EA3DB23005C9A66 /* LocationService.swift in Sources */ = {isa = PBXBuildFile; fileRef = 55A851472EA3DB23005C9A66 /* LocationService.swift */; };
+		55A851732EA3DB23005C9A66 /* HomeViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 55A8514C2EA3DB23005C9A66 /* HomeViewModel.swift */; };
+		55A851742EA3DB23005C9A66 /* EventMonitor.swift in Sources */ = {isa = PBXBuildFile; fileRef = 55A8514B2EA3DB23005C9A66 /* EventMonitor.swift */; };
+		55A851752EA3DB23005C9A66 /* EventDetailView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 55A851512EA3DB23005C9A66 /* EventDetailView.swift */; };
+		55A851762EA3DB23005C9A66 /* AppBlockingInfoView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 55A8514F2EA3DB23005C9A66 /* AppBlockingInfoView.swift */; };
+		55A851772EA3DB23005C9A66 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 55A8515A2EA3DB23005C9A66 /* Assets.xcassets */; };
+/* End PBXBuildFile section */
+
+/* Begin PBXFileReference section */
+		55A851402EA3DB23005C9A66 /* AppState.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppState.swift; sourceTree = "<group>"; };
+		55A851412EA3DB23005C9A66 /* Event.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Event.swift; sourceTree = "<group>"; };
+		55A851422EA3DB23005C9A66 /* EventConfiguration.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EventConfiguration.swift; sourceTree = "<group>"; };
+		55A851432EA3DB23005C9A66 /* UserSettings.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UserSettings.swift; sourceTree = "<group>"; };
+		55A851452EA3DB23005C9A66 /* AppBlockingService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppBlockingService.swift; sourceTree = "<group>"; };
+		55A851462EA3DB23005C9A66 /* CalendarService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CalendarService.swift; sourceTree = "<group>"; };
+		55A851472EA3DB23005C9A66 /* LocationService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LocationService.swift; sourceTree = "<group>"; };
+		55A851482EA3DB23005C9A66 /* NotificationService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NotificationService.swift; sourceTree = "<group>"; };
+		55A8514A2EA3DB23005C9A66 /* BackgroundTaskManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BackgroundTaskManager.swift; sourceTree = "<group>"; };
+		55A8514B2EA3DB23005C9A66 /* EventMonitor.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EventMonitor.swift; sourceTree = "<group>"; };
+		55A8514C2EA3DB23005C9A66 /* HomeViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HomeViewModel.swift; sourceTree = "<group>"; };
+		55A8514E2EA3DB23005C9A66 /* ActiveBlocksView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ActiveBlocksView.swift; sourceTree = "<group>"; };
+		55A8514F2EA3DB23005C9A66 /* AppBlockingInfoView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppBlockingInfoView.swift; sourceTree = "<group>"; };
+		55A851502EA3DB23005C9A66 /* AppSelectorView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppSelectorView.swift; sourceTree = "<group>"; };
+		55A851512EA3DB23005C9A66 /* EventDetailView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EventDetailView.swift; sourceTree = "<group>"; };
+		55A851522EA3DB23005C9A66 /* HomeView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HomeView.swift; sourceTree = "<group>"; };
+		55A851532EA3DB23005C9A66 /* LoadingView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LoadingView.swift; sourceTree = "<group>"; };
+		55A851542EA3DB23005C9A66 /* NotificationPermissionBanner.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NotificationPermissionBanner.swift; sourceTree = "<group>"; };
+		55A851552EA3DB23005C9A66 /* NotificationTestView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NotificationTestView.swift; sourceTree = "<group>"; };
+		55A851562EA3DB23005C9A66 /* OnboardingView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OnboardingView.swift; sourceTree = "<group>"; };
+		55A851572EA3DB23005C9A66 /* SettingsView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SettingsView.swift; sourceTree = "<group>"; };
+		55A851582EA3DB23005C9A66 /* UpcomingEventsView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UpcomingEventsView.swift; sourceTree = "<group>"; };
+		55A8515A2EA3DB23005C9A66 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
+		55A8515B2EA3DB23005C9A66 /* ContentView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ContentView.swift; sourceTree = "<group>"; };
+		55A8515C2EA3DB23005C9A66 /* DontBeLateApp.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DontBeLateApp.swift; sourceTree = "<group>"; };
+		55A8515D2EA3DB23005C9A66 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
+		PRODUCT123456789ABCDEF01 /* DontBeLate.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = DontBeLate.app; sourceTree = BUILT_PRODUCTS_DIR; };
+/* End PBXFileReference section */
+
+/* Begin PBXFrameworksBuildPhase section */
+		FRAMEWORKS123456789ABCDE /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXFrameworksBuildPhase section */
+
+/* Begin PBXGroup section */
+		55A851442EA3DB23005C9A66 /* Models */ = {
+			isa = PBXGroup;
+			children = (
+				55A851402EA3DB23005C9A66 /* AppState.swift */,
+				55A851412EA3DB23005C9A66 /* Event.swift */,
+				55A851422EA3DB23005C9A66 /* EventConfiguration.swift */,
+				55A851432EA3DB23005C9A66 /* UserSettings.swift */,
+			);
+			path = Models;
+			sourceTree = "<group>";
+		};
+		55A851492EA3DB23005C9A66 /* Services */ = {
+			isa = PBXGroup;
+			children = (
+				55A851452EA3DB23005C9A66 /* AppBlockingService.swift */,
+				55A851462EA3DB23005C9A66 /* CalendarService.swift */,
+				55A851472EA3DB23005C9A66 /* LocationService.swift */,
+				55A851482EA3DB23005C9A66 /* NotificationService.swift */,
+			);
+			path = Services;
+			sourceTree = "<group>";
+		};
+		55A8514D2EA3DB23005C9A66 /* ViewModels */ = {
+			isa = PBXGroup;
+			children = (
+				55A8514A2EA3DB23005C9A66 /* BackgroundTaskManager.swift */,
+				55A8514B2EA3DB23005C9A66 /* EventMonitor.swift */,
+				55A8514C2EA3DB23005C9A66 /* HomeViewModel.swift */,
+			);
+			path = ViewModels;
+			sourceTree = "<group>";
+		};
+		55A851592EA3DB23005C9A66 /* Views */ = {
+			isa = PBXGroup;
+			children = (
+				55A8514E2EA3DB23005C9A66 /* ActiveBlocksView.swift */,
+				55A8514F2EA3DB23005C9A66 /* AppBlockingInfoView.swift */,
+				55A851502EA3DB23005C9A66 /* AppSelectorView.swift */,
+				55A851512EA3DB23005C9A66 /* EventDetailView.swift */,
+				55A851522EA3DB23005C9A66 /* HomeView.swift */,
+				55A851532EA3DB23005C9A66 /* LoadingView.swift */,
+				55A851542EA3DB23005C9A66 /* NotificationPermissionBanner.swift */,
+				55A851552EA3DB23005C9A66 /* NotificationTestView.swift */,
+				55A851562EA3DB23005C9A66 /* OnboardingView.swift */,
+				55A851572EA3DB23005C9A66 /* SettingsView.swift */,
+				55A851582EA3DB23005C9A66 /* UpcomingEventsView.swift */,
+			);
+			path = Views;
+			sourceTree = "<group>";
+		};
+		55A8515E2EA3DB23005C9A66 /* DontBeLateApp */ = {
+			isa = PBXGroup;
+			children = (
+				55A851442EA3DB23005C9A66 /* Models */,
+				55A851492EA3DB23005C9A66 /* Services */,
+				55A8514D2EA3DB23005C9A66 /* ViewModels */,
+				55A851592EA3DB23005C9A66 /* Views */,
+				55A8515A2EA3DB23005C9A66 /* Assets.xcassets */,
+				55A8515B2EA3DB23005C9A66 /* ContentView.swift */,
+				55A8515C2EA3DB23005C9A66 /* DontBeLateApp.swift */,
+				55A8515D2EA3DB23005C9A66 /* Info.plist */,
+			);
+			path = DontBeLateApp;
+			sourceTree = "<group>";
+		};
+		MAINGROUP123456789ABCDEF = {
+			isa = PBXGroup;
+			children = (
+				55A8515E2EA3DB23005C9A66 /* DontBeLateApp */,
+				PRODUCTSGROUP123456789AB /* Products */,
+			);
+			sourceTree = "<group>";
+		};
+		PRODUCTSGROUP123456789AB /* Products */ = {
+			isa = PBXGroup;
+			children = (
+				PRODUCT123456789ABCDEF01 /* DontBeLate.app */,
+			);
+			name = Products;
+			sourceTree = "<group>";
+		};
+/* End PBXGroup section */
+
+/* Begin PBXNativeTarget section */
+		TARGET123456789ABCDEF012 /* DontBeLate */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = TARGETCONFIG12345678ABC /* Build configuration list for PBXNativeTarget "DontBeLate" */;
+			buildPhases = (
+				SOURCES123456789ABCDEF01 /* Sources */,
+				FRAMEWORKS123456789ABCDE /* Frameworks */,
+				RESOURCES123456789ABCDEF /* Resources */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+			);
+			name = DontBeLate;
+			productName = DontBeLate;
+			productReference = PRODUCT123456789ABCDEF01 /* DontBeLate.app */;
+			productType = "com.apple.product-type.application";
+		};
+/* End PBXNativeTarget section */
+
+/* Begin PBXProject section */
+		PROJECT123456789ABCDEF01 /* Project object */ = {
+			isa = PBXProject;
+			attributes = {
+				BuildIndependentTargetsInParallel = 1;
+				LastSwiftUpdateCheck = 1500;
+				LastUpgradeCheck = 1500;
+			};
+			buildConfigurationList = PROJECTCONFIG123456789A /* Build configuration list for PBXProject "DontBeLate" */;
+			compatibilityVersion = "Xcode 14.0";
+			developmentRegion = en;
+			hasScannedForEncodings = 0;
+			knownRegions = (
+				en,
+				Base,
+			);
+			mainGroup = MAINGROUP123456789ABCDEF;
+			productRefGroup = PRODUCTSGROUP123456789AB /* Products */;
+			projectDirPath = "";
+			projectRoot = "";
+			targets = (
+				TARGET123456789ABCDEF012 /* DontBeLate */,
+			);
+		};
+/* End PBXProject section */
+
+/* Begin PBXResourcesBuildPhase section */
+		RESOURCES123456789ABCDEF /* Resources */ = {
+			isa = PBXResourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				55A851772EA3DB23005C9A66 /* Assets.xcassets in Resources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXResourcesBuildPhase section */
+
+/* Begin PBXSourcesBuildPhase section */
+		SOURCES123456789ABCDEF01 /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				55A8515F2EA3DB23005C9A66 /* NotificationService.swift in Sources */,
+				55A851602EA3DB23005C9A66 /* ActiveBlocksView.swift in Sources */,
+				55A851612EA3DB23005C9A66 /* AppSelectorView.swift in Sources */,
+				55A851622EA3DB23005C9A66 /* HomeView.swift in Sources */,
+				55A851632EA3DB23005C9A66 /* EventConfiguration.swift in Sources */,
+				55A851642EA3DB23005C9A66 /* UserSettings.swift in Sources */,
+				55A851652EA3DB23005C9A66 /* DontBeLateApp.swift in Sources */,
+				55A851662EA3DB23005C9A66 /* CalendarService.swift in Sources */,
+				55A851672EA3DB23005C9A66 /* UpcomingEventsView.swift in Sources */,
+				55A851682EA3DB23005C9A66 /* ContentView.swift in Sources */,
+				55A851692EA3DB23005C9A66 /* NotificationPermissionBanner.swift in Sources */,
+				55A8516A2EA3DB23005C9A66 /* AppBlockingService.swift in Sources */,
+				55A8516B2EA3DB23005C9A66 /* AppState.swift in Sources */,
+				55A8516C2EA3DB23005C9A66 /* OnboardingView.swift in Sources */,
+				55A8516D2EA3DB23005C9A66 /* Event.swift in Sources */,
+				55A8516E2EA3DB23005C9A66 /* NotificationTestView.swift in Sources */,
+				55A8516F2EA3DB23005C9A66 /* LoadingView.swift in Sources */,
+				55A851702EA3DB23005C9A66 /* SettingsView.swift in Sources */,
+				55A851712EA3DB23005C9A66 /* BackgroundTaskManager.swift in Sources */,
+				55A851722EA3DB23005C9A66 /* LocationService.swift in Sources */,
+				55A851732EA3DB23005C9A66 /* HomeViewModel.swift in Sources */,
+				55A851742EA3DB23005C9A66 /* EventMonitor.swift in Sources */,
+				55A851752EA3DB23005C9A66 /* EventDetailView.swift in Sources */,
+				55A851762EA3DB23005C9A66 /* AppBlockingInfoView.swift in Sources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXSourcesBuildPhase section */
+
+/* Begin XCBuildConfiguration section */
+		DEBUG123456789ABCDEF0123 /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ALWAYS_SEARCH_USER_PATHS = NO;
+				CLANG_ANALYZER_NONNULL = YES;
+				CLANG_CXX_LANGUAGE_STANDARD = "gnu++20";
+				CLANG_ENABLE_MODULES = YES;
+				CLANG_ENABLE_OBJC_ARC = YES;
+				COPY_PHASE_STRIP = NO;
+				DEBUG_INFORMATION_FORMAT = dwarf;
+				ENABLE_TESTABILITY = YES;
+				GCC_C_LANGUAGE_STANDARD = gnu11;
+				GCC_OPTIMIZATION_LEVEL = 0;
+				IPHONEOS_DEPLOYMENT_TARGET = 16.0;
+				MTL_ENABLE_DEBUG_INFO = INCLUDE_SOURCE;
+				ONLY_ACTIVE_ARCH = YES;
+				SDKROOT = iphoneos;
+				SWIFT_ACTIVE_COMPILATION_CONDITIONS = DEBUG;
+				SWIFT_OPTIMIZATION_LEVEL = "-Onone";
+			};
+			name = Debug;
+		};
+		RELEASE123456789ABCDEF01 /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ALWAYS_SEARCH_USER_PATHS = NO;
+				CLANG_ANALYZER_NONNULL = YES;
+				CLANG_CXX_LANGUAGE_STANDARD = "gnu++20";
+				CLANG_ENABLE_MODULES = YES;
+				CLANG_ENABLE_OBJC_ARC = YES;
+				COPY_PHASE_STRIP = NO;
+				DEBUG_INFORMATION_FORMAT = "dwarf-with-dsym";
+				ENABLE_NS_ASSERTIONS = NO;
+				GCC_C_LANGUAGE_STANDARD = gnu11;
+				IPHONEOS_DEPLOYMENT_TARGET = 16.0;
+				MTL_ENABLE_DEBUG_INFO = NO;
+				SDKROOT = iphoneos;
+				SWIFT_COMPILATION_MODE = wholemodule;
+				SWIFT_OPTIMIZATION_LEVEL = "-O";
+				VALIDATE_PRODUCT = YES;
+			};
+			name = Release;
+		};
+		TARGETDEBUG12345678ABCDE /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				CODE_SIGN_ALLOW_ENTITLEMENTS_MODIFICATION = YES;
+				CODE_SIGN_ENTITLEMENTS = DontBeLateApp.entitlements;
+				CODE_SIGN_STYLE = Automatic;
+				CURRENT_PROJECT_VERSION = 1;
+				DEVELOPMENT_TEAM = VQMLSSZZUF;
+				ENABLE_PREVIEWS = YES;
+				GENERATE_INFOPLIST_FILE = NO;
+				INFOPLIST_FILE = DontBeLateApp/Info.plist;
+				INFOPLIST_KEY_UIApplicationSceneManifest_Generation = YES;
+				INFOPLIST_KEY_UILaunchScreen_Generation = YES;
+				IPHONEOS_DEPLOYMENT_TARGET = 16.0;
+				LD_RUNPATH_SEARCH_PATHS = (
+					"$(inherited)",
+					"@executable_path/Frameworks",
+				);
+				MARKETING_VERSION = 1.0;
+				PRODUCT_BUNDLE_IDENTIFIER = com.dontbelate.DontBeLate;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SWIFT_EMIT_LOC_STRINGS = YES;
+				SWIFT_VERSION = 5.0;
+				TARGETED_DEVICE_FAMILY = "1,2";
+			};
+			name = Debug;
+		};
+		TARGETRELEASE12345678ABC /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				CODE_SIGN_ALLOW_ENTITLEMENTS_MODIFICATION = YES;
+				CODE_SIGN_ENTITLEMENTS = DontBeLateApp.entitlements;
+				CODE_SIGN_STYLE = Automatic;
+				CURRENT_PROJECT_VERSION = 1;
+				DEVELOPMENT_TEAM = VQMLSSZZUF;
+				ENABLE_PREVIEWS = YES;
+				GENERATE_INFOPLIST_FILE = NO;
+				INFOPLIST_FILE = DontBeLateApp/Info.plist;
+				INFOPLIST_KEY_UIApplicationSceneManifest_Generation = YES;
+				INFOPLIST_KEY_UILaunchScreen_Generation = YES;
+				IPHONEOS_DEPLOYMENT_TARGET = 16.0;
+				LD_RUNPATH_SEARCH_PATHS = (
+					"$(inherited)",
+					"@executable_path/Frameworks",
+				);
+				MARKETING_VERSION = 1.0;
+				PRODUCT_BUNDLE_IDENTIFIER = com.dontbelate.DontBeLate;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SWIFT_EMIT_LOC_STRINGS = YES;
+				SWIFT_VERSION = 5.0;
+				TARGETED_DEVICE_FAMILY = "1,2";
+			};
+			name = Release;
+		};
+/* End XCBuildConfiguration section */
+
+/* Begin XCConfigurationList section */
+		PROJECTCONFIG123456789A /* Build configuration list for PBXProject "DontBeLate" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				DEBUG123456789ABCDEF0123 /* Debug */,
+				RELEASE123456789ABCDEF01 /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+		TARGETCONFIG12345678ABC /* Build configuration list for PBXNativeTarget "DontBeLate" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				TARGETDEBUG12345678ABCDE /* Debug */,
+				TARGETRELEASE12345678ABC /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+/* End XCConfigurationList section */
+	};
+	rootObject = PROJECT123456789ABCDEF01 /* Project object */;
+}
