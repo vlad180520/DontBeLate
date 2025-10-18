@@ -21,6 +21,7 @@ class EventMonitor: ObservableObject {
     private let appBlockingService = AppBlockingService.shared
     private let userSettings = UserSettings.shared
     private let configManager = EventConfigurationManager.shared
+    private let backendSync = BackendSyncService.shared
     
     private var monitoringTimer: Timer?
     private var cancellables = Set<AnyCancellable>()
@@ -31,6 +32,11 @@ class EventMonitor: ObservableObject {
             .sink { [weak self] in
                 print("🔄 Live sync: Calendar changed, refreshing events...")
                 self?.checkUpcomingEvents()
+                
+                // Sync to backend
+                Task {
+                    await self?.syncEventsToBackend()
+                }
             }
             .store(in: &cancellables)
     }
@@ -65,6 +71,27 @@ class EventMonitor: ObservableObject {
             DispatchQueue.main.async {
                 self.upcomingEvents = events
                 self.processEvents(events)
+                
+                // Sync to backend
+                Task {
+                    await self.syncEventsToBackend()
+                }
+            }
+        }
+    }
+    
+    // Sync events to backend
+    private func syncEventsToBackend() async {
+        calendarService.fetchUpcomingEvents(daysAhead: 7) { [weak self] eventModels in
+            guard let self = self else { return }
+            
+            // Convert EventModels to EKEvents for backend sync
+            let ekEvents = eventModels.compactMap { model in
+                self.calendarService.getEKEvent(by: model.id)
+            }
+            
+            Task {
+                await self.backendSync.performFullSync(with: ekEvents)
             }
         }
     }
@@ -117,7 +144,7 @@ class EventMonitor: ObservableObject {
         }
     }
     
-    // Process event with traffic and custom config
+    // Process event with traffic and custom config (uses backend + local fallback)
     private func processEventWithTrafficAndConfig(_ event: EventModel, config: EventConfiguration) {
         guard let location = calendarService.getEventLocation(eventId: event.id) else {
             // Fallback to manual timing
@@ -133,30 +160,74 @@ class EventMonitor: ObservableObject {
         
         let destination = CLLocationCoordinate2D(latitude: location.latitude, longitude: location.longitude)
         
-        locationService.calculateTravelTimeWithTraffic(to: destination) { [weak self] travelTime, error in
-            guard let self = self, let travelTime = travelTime else {
+        // Try backend calculation first
+        Task {
+            guard let userLocation = await locationService.getCurrentLocation() else {
                 // Fallback to manual timing
-                self?.createBlockingRule(
-                    for: event,
-                    minutesBefore: config.minutesBeforeEvent,
-                    usesTraffic: false,
-                    travelTime: nil,
-                    customApps: config.blockedAppBundleIds
-                )
+                await MainActor.run {
+                    self.createBlockingRule(
+                        for: event,
+                        minutesBefore: config.minutesBeforeEvent,
+                        usesTraffic: false,
+                        travelTime: nil,
+                        customApps: config.blockedAppBundleIds
+                    )
+                }
                 return
             }
             
-            let travelMinutes = Int(ceil(travelTime / 60.0))
-            let bufferMinutes = 5
-            let totalMinutes = travelMinutes + bufferMinutes
+            // 1. Try backend travel time calculation
+            if let ekEvent = calendarService.getEKEvent(by: event.id) {
+                let backendTravelMinutes = await backendSync.calculateTravelTime(
+                    for: ekEvent,
+                    from: (lat: userLocation.coordinate.latitude, lng: userLocation.coordinate.longitude)
+                )
+                
+                if let travelMinutes = backendTravelMinutes {
+                    // Backend calculation succeeded
+                    let bufferMinutes = 5
+                    let totalMinutes = travelMinutes + bufferMinutes
+                    
+                    await MainActor.run {
+                        self.createBlockingRule(
+                            for: event,
+                            minutesBefore: totalMinutes,
+                            usesTraffic: true,
+                            travelTime: travelMinutes,
+                            customApps: config.blockedAppBundleIds
+                        )
+                    }
+                    return
+                }
+            }
             
-            self.createBlockingRule(
-                for: event,
-                minutesBefore: totalMinutes,
-                usesTraffic: true,
-                travelTime: travelMinutes,
-                customApps: config.blockedAppBundleIds
-            )
+            // 2. Fallback to local MapKit calculation
+            locationService.calculateTravelTimeWithTraffic(to: destination) { [weak self] travelTime, error in
+                guard let self = self else { return }
+                
+                if let travelTime = travelTime {
+                    let travelMinutes = Int(ceil(travelTime / 60.0))
+                    let bufferMinutes = 5
+                    let totalMinutes = travelMinutes + bufferMinutes
+                    
+                    self.createBlockingRule(
+                        for: event,
+                        minutesBefore: totalMinutes,
+                        usesTraffic: true,
+                        travelTime: travelMinutes,
+                        customApps: config.blockedAppBundleIds
+                    )
+                } else {
+                    // Fallback to manual timing
+                    self.createBlockingRule(
+                        for: event,
+                        minutesBefore: config.minutesBeforeEvent,
+                        usesTraffic: false,
+                        travelTime: nil,
+                        customApps: config.blockedAppBundleIds
+                    )
+                }
+            }
         }
     }
     
@@ -268,23 +339,44 @@ class EventMonitor: ObservableObject {
         }
     }
     
-    // Activate app blocking
+    // Activate app blocking (ACTUAL BLOCKING with Screen Time API)
     private func activateBlocking(for rule: AppBlockRule, event: EventModel) {
         guard rule.blockStartTime <= Date() && rule.blockEndTime > Date() else { return }
         
-        appBlockingService.blockApps(bundleIds: rule.blockedAppBundleIds, until: rule.blockEndTime)
+        // ⚠️ CRITICAL: Use actual ApplicationToken objects for blocking
+        let appTokens = userSettings.selectedAppsTokens
+        
+        if !appTokens.isEmpty {
+            // Block apps using Screen Time API with actual tokens
+            appBlockingService.blockApps(appTokens: appTokens, until: rule.blockEndTime)
+            
+            // Notify backend about blocking session
+            Task {
+                await backendSync.startBlockingSession(
+                    eventId: event.id,
+                    eventTitle: event.title,
+                    blockedApps: rule.blockedAppBundleIds,
+                    startTime: rule.blockStartTime,
+                    endTime: rule.blockEndTime
+                )
+            }
+            
+            print("🔒 ACTUAL BLOCKING ACTIVE for event: \(event.title)")
+            print("   📱 Blocked apps: \(appTokens.count)")
+            print("   ⏰ Until: \(rule.blockEndTime)")
+        } else {
+            print("⚠️ No app tokens selected - cannot block apps")
+        }
         
         // Update rule status
         if let index = activeBlockRules.firstIndex(where: { $0.id == rule.id }) {
             activeBlockRules[index].isActive = true
         }
         
-        print("Apps blocked for event: \(event.title)")
-        
         // Send detailed notification with app names
-        sendBlockingNotification(for: event, appCount: rule.blockedAppBundleIds.count, blockedApps: rule.blockedAppBundleIds)
+        sendBlockingNotification(for: event, appCount: appTokens.count, blockedApps: rule.blockedAppBundleIds)
         
-        // Schedule unblocking
+        // Schedule unblocking at event start time
         let timeUntilUnblock = rule.blockEndTime.timeIntervalSince(Date())
         DispatchQueue.main.asyncAfter(deadline: .now() + timeUntilUnblock) { [weak self] in
             self?.deactivateBlocking(for: rule, event: event)
@@ -315,14 +407,20 @@ class EventMonitor: ObservableObject {
         }
     }
     
-    // Deactivate app blocking
+    // Deactivate app blocking (when event starts)
     private func deactivateBlocking(for rule: AppBlockRule, event: EventModel) {
-        appBlockingService.unblockApps(bundleIds: rule.blockedAppBundleIds)
+        // Unblock apps using Screen Time API
+        appBlockingService.unblockApps()
+        
+        // Notify backend
+        Task {
+            await backendSync.endBlockingSession(eventId: event.id)
+        }
         
         // Remove rule
         activeBlockRules.removeAll { $0.id == rule.id }
         
-        print("Apps unblocked")
+        print("✅ Apps unblocked - event started: \(event.title)")
         
         // Send unblocking notification
         notificationService.sendImmediateNotification(

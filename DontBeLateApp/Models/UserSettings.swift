@@ -24,7 +24,14 @@ class UserSettings: ObservableObject {
         didSet {
             // Update legacy bundle IDs for backward compatibility
             blockedAppBundleIds = Array(selectedAppsTokens.map { _ in "token" })
-            print("✅ Saved \(selectedAppsTokens.count) app tokens")
+            
+            // ⚠️ CRITICAL: Persist the tokens so they survive app restarts
+            if let encoded = try? JSONEncoder().encode(selectedAppsTokens) {
+                UserDefaults.standard.set(encoded, forKey: "selectedAppsTokens")
+                print("✅ Saved \(selectedAppsTokens.count) app tokens to UserDefaults")
+            } else {
+                print("⚠️ Failed to encode app tokens")
+            }
         }
     }
     
@@ -67,6 +74,16 @@ class UserSettings: ObservableObject {
         
         let transportRaw = UserDefaults.standard.string(forKey: "preferredTransportType") ?? "automobile"
         self.preferredTransportType = TransportType(rawValue: transportRaw) ?? .automobile
+        
+        // ⚠️ CRITICAL: Load persisted app tokens
+        if let data = UserDefaults.standard.data(forKey: "selectedAppsTokens"),
+           let decoded = try? JSONDecoder().decode(Set<ApplicationToken>.self, from: data) {
+            self.selectedAppsTokens = decoded
+            print("✅ Loaded \(decoded.count) app tokens from UserDefaults")
+        } else {
+            self.selectedAppsTokens = []
+            print("ℹ️ No saved app tokens found")
+        }
     }
 }
 

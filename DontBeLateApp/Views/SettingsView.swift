@@ -9,8 +9,11 @@ import SwiftUI
 
 struct SettingsView: View {
     @StateObject private var userSettings = UserSettings.shared
+    @StateObject private var appBlockingService = AppBlockingService.shared
     @State private var showingAppSelector = false
     @State private var showingAppBlockingInfo = false
+    @State private var showingUnblockConfirmation = false
+    @State private var showingUnblockSuccess = false
     
     var body: some View {
         NavigationView {
@@ -82,6 +85,29 @@ struct SettingsView: View {
                     .foregroundColor(.primary)
                 }
                 
+                // Emergency Unblock
+                Section(header: Text("Emergency Controls")) {
+                    Button(action: {
+                        showingUnblockConfirmation = true
+                    }) {
+                        HStack {
+                            Image(systemName: "lock.open.fill")
+                                .foregroundColor(.orange)
+                            VStack(alignment: .leading, spacing: 4) {
+                                Text("Unblock All Apps")
+                                    .fontWeight(.semibold)
+                                Text("Remove all active blocking shields")
+                                    .font(.caption)
+                                    .foregroundColor(.secondary)
+                            }
+                            Spacer()
+                            Image(systemName: "exclamationmark.triangle.fill")
+                                .foregroundColor(.orange)
+                        }
+                    }
+                    .foregroundColor(.primary)
+                }
+                
                 // Notifications
                 Section(header: Text("Notifications"), footer: Text("Receive push notifications for event reminders, app blocking alerts, and traffic updates.")) {
                     Toggle(isOn: $userSettings.enableNotifications) {
@@ -143,7 +169,32 @@ struct SettingsView: View {
             .sheet(isPresented: $showingAppBlockingInfo) {
                 AppBlockingInfoView()
             }
+            .alert("Unblock All Apps?", isPresented: $showingUnblockConfirmation) {
+                Button("Cancel", role: .cancel) { }
+                Button("Unblock", role: .destructive) {
+                    unblockAllApps()
+                }
+            } message: {
+                Text("This will immediately remove all app blocking shields and make all apps accessible again.")
+            }
+            .alert("Apps Unblocked", isPresented: $showingUnblockSuccess) {
+                Button("OK", role: .cancel) { }
+            } message: {
+                Text("All apps are now accessible. Blocking will resume at the next scheduled event time.")
+            }
         }
+    }
+    
+    // Unblock all apps
+    private func unblockAllApps() {
+        appBlockingService.unblockApps()
+        
+        // Show success alert
+        DispatchQueue.main.asyncAfter(deadline: .now() + 0.3) {
+            showingUnblockSuccess = true
+        }
+        
+        print("✅ Manual unblock triggered from Settings")
     }
 }
 

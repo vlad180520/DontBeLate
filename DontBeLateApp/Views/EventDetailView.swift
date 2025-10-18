@@ -74,44 +74,78 @@ struct EventDetailView: View {
                     Toggle("Enable App Blocking", isOn: $configuration.isEnabled)
                     
                     if configuration.isEnabled {
-                        // Traffic-based timing toggle (per event) - PROMINENTLY DISPLAYED
+                        // Traffic-based timing toggle (per event) - ALWAYS SHOW IF LOCATION EXISTS
                         if event.hasLocation {
-                            VStack(spacing: 12) {
+                            VStack(alignment: .leading, spacing: 12) {
+                                // Prominent header
+                                HStack {
+                                    Image(systemName: "car.circle.fill")
+                                        .foregroundColor(.green)
+                                        .font(.title2)
+                                    Text("Traffic-Based Timing")
+                                        .font(.headline)
+                                        .foregroundColor(.primary)
+                                }
+                                .padding(.bottom, 4)
+                                
+                                // Toggle with explanation
                                 Toggle(isOn: $configuration.useTrafficTiming) {
-                                    HStack {
-                                        Image(systemName: "car.circle.fill")
-                                            .foregroundColor(.green)
-                                            .font(.title3)
-                                        VStack(alignment: .leading, spacing: 2) {
-                                            Text("Smart Traffic Timing")
-                                                .fontWeight(.semibold)
-                                            Text("Auto-calculate based on live traffic")
-                                                .font(.caption)
-                                                .foregroundColor(.secondary)
-                                        }
+                                    VStack(alignment: .leading, spacing: 4) {
+                                        Text("Use Smart Traffic Calculation")
+                                            .fontWeight(.semibold)
+                                        Text("Block apps based on real-time travel time + 5 min buffer")
+                                            .font(.caption)
+                                            .foregroundColor(.secondary)
                                     }
                                 }
+                                .toggleStyle(SwitchToggleStyle(tint: .green))
                                 .onChange(of: configuration.useTrafficTiming) { newValue in
                                     if !newValue {
                                         // Reset to manual timing
                                         configuration.minutesBeforeEvent = 15
                                     }
                                 }
-                                .padding(.vertical, 4)
                                 
                                 if configuration.useTrafficTiming {
-                                    HStack {
+                                    HStack(spacing: 8) {
                                         Image(systemName: "checkmark.circle.fill")
                                             .foregroundColor(.green)
-                                        Text("Apps will be blocked based on real-time travel time from your location to the event destination")
-                                            .font(.caption)
-                                            .foregroundColor(.secondary)
+                                        VStack(alignment: .leading, spacing: 2) {
+                                            Text("Active")
+                                                .fontWeight(.semibold)
+                                                .foregroundColor(.green)
+                                            Text("Calculates from your current location to event destination")
+                                                .font(.caption)
+                                                .foregroundColor(.secondary)
+                                        }
                                     }
-                                    .padding(10)
+                                    .padding(12)
+                                    .frame(maxWidth: .infinity, alignment: .leading)
                                     .background(Color.green.opacity(0.1))
                                     .cornerRadius(8)
                                 }
                             }
+                            .padding(.vertical, 8)
+                            .padding(.horizontal, 12)
+                            .background(Color.green.opacity(0.05))
+                            .cornerRadius(10)
+                        } else {
+                            // Show why traffic timing is not available
+                            HStack {
+                                Image(systemName: "location.slash")
+                                    .foregroundColor(.orange)
+                                VStack(alignment: .leading, spacing: 2) {
+                                    Text("Traffic Timing Unavailable")
+                                        .fontWeight(.semibold)
+                                        .foregroundColor(.orange)
+                                    Text("Add a location to this event to use traffic-based timing")
+                                        .font(.caption)
+                                        .foregroundColor(.secondary)
+                                }
+                            }
+                            .padding(10)
+                            .background(Color.orange.opacity(0.1))
+                            .cornerRadius(8)
                         }
                         
                         if !configuration.useTrafficTiming {
@@ -133,31 +167,110 @@ struct EventDetailView: View {
                                     .foregroundColor(.purple)
                                 Text("Select Apps to Block")
                                 Spacer()
-                                Text("\(configuration.blockedAppBundleIds.count)")
-                                    .foregroundColor(.secondary)
+                                let appCount = UserSettings.shared.selectedAppsTokens.count
+                                if appCount > 0 {
+                                    HStack(spacing: 4) {
+                                        Image(systemName: "checkmark.circle.fill")
+                                            .foregroundColor(.green)
+                                            .font(.caption)
+                                        Text("\(appCount)")
+                                            .foregroundColor(.green)
+                                            .fontWeight(.semibold)
+                                    }
+                                } else {
+                                    Text("None")
+                                        .foregroundColor(.secondary)
+                                }
                                 Image(systemName: "chevron.right")
                                     .foregroundColor(.secondary)
+                                    .font(.caption)
                             }
                         }
                         .foregroundColor(.primary)
                         
-                        // Show selected apps
-                        if !configuration.blockedAppBundleIds.isEmpty {
-                            VStack(alignment: .leading, spacing: 8) {
-                                Text("Blocked Apps:")
-                                    .font(.caption)
-                                    .foregroundColor(.secondary)
+                        // Show selected apps - LIST FORMAT WITH NAMES
+                        let selectedAppCount = UserSettings.shared.selectedAppsTokens.count
+                        if selectedAppCount > 0 {
+                            VStack(alignment: .leading, spacing: 10) {
+                                // Header
+                                HStack {
+                                    Image(systemName: "lock.shield.fill")
+                                        .foregroundColor(.red)
+                                        .font(.title3)
+                                    Text("Blocked Apps:")
+                                        .font(.headline)
+                                        .foregroundColor(.red)
+                                }
                                 
-                                ForEach(getBlockedApps(), id: \.bundleId) { app in
-                                    HStack {
-                                        Image(systemName: app.icon)
-                                            .foregroundColor(.red)
-                                        Text(app.name)
-                                            .font(.subheadline)
+                                // List of apps
+                                VStack(alignment: .leading, spacing: 8) {
+                                    ForEach(0..<selectedAppCount, id: \.self) { index in
+                                        HStack(spacing: 10) {
+                                            // Bullet point
+                                            Circle()
+                                                .fill(Color.red)
+                                                .frame(width: 6, height: 6)
+                                            
+                                            // App name
+                                            Text("Selected App \(index + 1)")
+                                                .font(.body)
+                                                .foregroundColor(.primary)
+                                            
+                                            Spacer()
+                                            
+                                            // Lock icon
+                                            Image(systemName: "lock.fill")
+                                                .foregroundColor(.red)
+                                                .font(.caption)
+                                        }
+                                        .padding(.vertical, 8)
+                                        .padding(.horizontal, 12)
+                                        .background(Color.red.opacity(0.05))
+                                        .cornerRadius(8)
                                     }
                                 }
+                                
+                                // Info banner
+                                HStack(spacing: 8) {
+                                    Image(systemName: "info.circle.fill")
+                                        .foregroundColor(.blue)
+                                    VStack(alignment: .leading, spacing: 2) {
+                                        Text("Specific Apps Only")
+                                            .fontWeight(.semibold)
+                                            .foregroundColor(.blue)
+                                        Text("Only these \(selectedAppCount) app\(selectedAppCount == 1 ? "" : "s") will be blocked - not entire categories")
+                                            .font(.caption)
+                                            .foregroundColor(.secondary)
+                                    }
+                                }
+                                .padding(10)
+                                .frame(maxWidth: .infinity, alignment: .leading)
+                                .background(Color.blue.opacity(0.1))
+                                .cornerRadius(8)
                             }
-                            .padding(.vertical, 4)
+                            .padding(.vertical, 12)
+                            .padding(.horizontal, 12)
+                            .background(Color(.systemGray6))
+                            .cornerRadius(12)
+                        } else {
+                            VStack(alignment: .leading, spacing: 8) {
+                                HStack {
+                                    Image(systemName: "exclamationmark.triangle.fill")
+                                        .foregroundColor(.orange)
+                                        .font(.title3)
+                                    Text("No Apps Selected")
+                                        .font(.headline)
+                                        .foregroundColor(.orange)
+                                }
+                                
+                                Text("Tap 'Select Apps to Block' above to choose which apps to block for this event")
+                                    .font(.caption)
+                                    .foregroundColor(.secondary)
+                            }
+                            .padding(12)
+                            .frame(maxWidth: .infinity, alignment: .leading)
+                            .background(Color.orange.opacity(0.1))
+                            .cornerRadius(8)
                         }
                     }
                 }
@@ -165,19 +278,71 @@ struct EventDetailView: View {
                 // Summary
                 if configuration.isEnabled {
                     Section(header: Text("Summary")) {
-                        VStack(alignment: .leading, spacing: 8) {
-                            Text("Your selected apps will be blocked \(configuration.minutesBeforeEvent) minutes before this event.")
-                                .font(.subheadline)
-                                .foregroundColor(.secondary)
+                        VStack(alignment: .leading, spacing: 12) {
+                            // Timing summary
+                            HStack(alignment: .top, spacing: 8) {
+                                Image(systemName: configuration.useTrafficTiming ? "car.circle.fill" : "clock.fill")
+                                    .foregroundColor(configuration.useTrafficTiming ? .green : .blue)
+                                    .font(.title3)
+                                VStack(alignment: .leading, spacing: 4) {
+                                    if configuration.useTrafficTiming {
+                                        Text("Smart Traffic-Based Blocking")
+                                            .fontWeight(.semibold)
+                                        Text("Apps blocked based on real-time travel time + 5 min buffer")
+                                            .font(.caption)
+                                            .foregroundColor(.secondary)
+                                    } else {
+                                        Text("Manual Time Blocking")
+                                            .fontWeight(.semibold)
+                                        Text("Apps blocked \(configuration.minutesBeforeEvent) minutes before event")
+                                            .font(.caption)
+                                            .foregroundColor(.secondary)
+                                    }
+                                }
+                            }
                             
-                            if !configuration.blockedAppBundleIds.isEmpty {
-                                Text("Apps to block: \(configuration.blockedAppBundleIds.count)")
-                                    .font(.subheadline)
-                                    .foregroundColor(.blue)
-                            } else {
-                                Text("⚠️ No apps selected to block")
-                                    .font(.subheadline)
-                                    .foregroundColor(.orange)
+                            Divider()
+                            
+                            // Apps summary
+                            let appCount = UserSettings.shared.selectedAppsTokens.count
+                            HStack(alignment: .top, spacing: 8) {
+                                Image(systemName: appCount > 0 ? "checkmark.shield.fill" : "exclamationmark.shield.fill")
+                                    .foregroundColor(appCount > 0 ? .green : .orange)
+                                    .font(.title3)
+                                VStack(alignment: .leading, spacing: 4) {
+                                    if appCount > 0 {
+                                        Text("\(appCount) App\(appCount == 1 ? "" : "s") Selected")
+                                            .fontWeight(.semibold)
+                                        Text("Only these specific apps will be blocked")
+                                            .font(.caption)
+                                            .foregroundColor(.secondary)
+                                    } else {
+                                        Text("No Apps Selected")
+                                            .fontWeight(.semibold)
+                                            .foregroundColor(.orange)
+                                        Text("Select apps to enable blocking")
+                                            .font(.caption)
+                                            .foregroundColor(.secondary)
+                                    }
+                                }
+                            }
+                            
+                            // Blocking period
+                            if appCount > 0 {
+                                Divider()
+                                
+                                HStack(alignment: .top, spacing: 8) {
+                                    Image(systemName: "hourglass")
+                                        .foregroundColor(.purple)
+                                        .font(.title3)
+                                    VStack(alignment: .leading, spacing: 4) {
+                                        Text("Blocking Period")
+                                            .fontWeight(.semibold)
+                                        Text("From reminder time until event starts")
+                                            .font(.caption)
+                                            .foregroundColor(.secondary)
+                                    }
+                                }
                             }
                         }
                         .padding(.vertical, 4)
@@ -209,11 +374,6 @@ struct EventDetailView: View {
     
     private func saveConfiguration() {
         configManager.saveConfiguration(configuration)
-    }
-    
-    private func getBlockedApps() -> [BlockedApp] {
-        let allApps = AppBlockingService.commonApps
-        return allApps.filter { configuration.blockedAppBundleIds.contains($0.bundleId) }
     }
 }
 

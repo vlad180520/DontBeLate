@@ -113,6 +113,11 @@ class CalendarService: ObservableObject {
         return EventModel(from: ekEvent)
     }
     
+    // Get raw EKEvent by ID
+    func getEKEvent(by eventId: String) -> EKEvent? {
+        return eventStore.event(withIdentifier: eventId)
+    }
+    
     // Get location coordinates from event
     func getEventLocation(eventId: String) -> (latitude: Double, longitude: Double)? {
         guard let ekEvent = eventStore.event(withIdentifier: eventId),

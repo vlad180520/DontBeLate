@@ -49,6 +49,26 @@ class LocationService: NSObject, ObservableObject {
         locationManager.stopUpdatingLocation()
     }
     
+    // Get current location asynchronously
+    func getCurrentLocation() async -> CLLocation? {
+        // If we already have a recent location, return it
+        if let location = currentLocation,
+           Date().timeIntervalSince(location.timestamp) < 300 { // Less than 5 minutes old
+            return location
+        }
+        
+        // Otherwise request fresh location
+        return await withCheckedContinuation { continuation in
+            startUpdatingLocation()
+            
+            // Wait for location update with timeout
+            DispatchQueue.main.asyncAfter(deadline: .now() + 10) { [weak self] in
+                self?.stopUpdatingLocation()
+                continuation.resume(returning: self?.currentLocation)
+            }
+        }
+    }
+    
     // Calculate travel time to destination
     func calculateTravelTime(
         to destination: CLLocationCoordinate2D,

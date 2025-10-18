@@ -62,15 +62,17 @@ class AppBlockingService: ObservableObject {
         if #available(iOS 16.0, *) {
             let store = ManagedSettingsStore()
             
-            // THIS IS THE KEY: Use ApplicationToken (Token<Application>)
+            // ✅ ONLY BLOCK SPECIFIC APPS - NOT CATEGORIES
+            // This ensures only the user-selected apps are blocked (e.g., Instagram only)
+            // NOT all apps in social media category
             store.shield.applications = appTokens
             
-            // Optional: Add a custom shield message
-            store.shield.applicationCategories = .all(except: Set())
+            // DON'T block categories - we want specific apps only
+            store.shield.applicationCategories = nil
             
-            print("🔒 BLOCKING NOW: \(appTokens.count) apps are being blocked!")
+            print("🔒 BLOCKING NOW: \(appTokens.count) SPECIFIC app\(appTokens.count == 1 ? "" : "s") being blocked!")
             print("📱 Apps will be shielded with Screen Time overlay until: \(endDate)")
-            print("✅ Blocking is ACTIVE - users cannot access these apps!")
+            print("✅ Blocking is ACTIVE - ONLY selected apps are blocked, not categories!")
         }
         #else
         print("📱 Simulator: App blocking not available (test on real device)")
@@ -88,8 +90,8 @@ class AppBlockingService: ObservableObject {
         }
     }
     
-    // Unblock apps
-    func unblockApps(bundleIds: [String]) {
+    // Unblock apps (bundleIds parameter kept for backward compatibility but not used)
+    func unblockApps(bundleIds: [String] = []) {
         guard isAuthorized else {
             print("Not authorized to unblock apps")
             return

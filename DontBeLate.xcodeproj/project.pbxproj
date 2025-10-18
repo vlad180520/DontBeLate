@@ -32,7 +32,9 @@
 		55A851752EA3DB23005C9A66 /* EventDetailView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 55A851512EA3DB23005C9A66 /* EventDetailView.swift */; };
 		55A851762EA3DB23005C9A66 /* AppBlockingInfoView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 55A8514F2EA3DB23005C9A66 /* AppBlockingInfoView.swift */; };
 		55A851772EA3DB23005C9A66 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 55A8515A2EA3DB23005C9A66 /* Assets.xcassets */; };
-/* End PBXBuildFile section */
+
+		E7C940C4C5DC45D2984CBE2A /* ConvexClient.swift in Sources */ = {isa = PBXBuildFile; fileRef = BFA2981928BA47B2BCF32A49 /* ConvexClient.swift */; };
+		93AAE2F87CC24EA99AFD9F02 /* BackendSyncService.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8D07DD4D82BA476A817A3859 /* BackendSyncService.swift */; };/* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
 		55A851402EA3DB23005C9A66 /* AppState.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppState.swift; sourceTree = "<group>"; };
@@ -62,7 +64,9 @@
 		55A8515C2EA3DB23005C9A66 /* DontBeLateApp.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DontBeLateApp.swift; sourceTree = "<group>"; };
 		55A8515D2EA3DB23005C9A66 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		PRODUCT123456789ABCDEF01 /* DontBeLate.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = DontBeLate.app; sourceTree = BUILT_PRODUCTS_DIR; };
-/* End PBXFileReference section */
+
+		BFA2981928BA47B2BCF32A49 /* ConvexClient.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ConvexClient.swift; sourceTree = "<group>"; };
+		8D07DD4D82BA476A817A3859 /* BackendSyncService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BackendSyncService.swift; sourceTree = "<group>"; };/* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
 		FRAMEWORKS123456789ABCDE /* Frameworks */ = {
@@ -93,7 +97,8 @@
 				55A851462EA3DB23005C9A66 /* CalendarService.swift */,
 				55A851472EA3DB23005C9A66 /* LocationService.swift */,
 				55A851482EA3DB23005C9A66 /* NotificationService.swift */,
-			);
+				BFA2981928BA47B2BCF32A49 /* ConvexClient.swift */,
+				8D07DD4D82BA476A817A3859 /* BackendSyncService.swift */,);
 			path = Services;
 			sourceTree = "<group>";
 		};
@@ -209,8 +214,7 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				55A851772EA3DB23005C9A66 /* Assets.xcassets in Resources */,
-			);
+				55A851772EA3DB23005C9A66 /* Assets.xcassets in Resources */,);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
 /* End PBXResourcesBuildPhase section */
@@ -244,7 +248,8 @@
 				55A851742EA3DB23005C9A66 /* EventMonitor.swift in Sources */,
 				55A851752EA3DB23005C9A66 /* EventDetailView.swift in Sources */,
 				55A851762EA3DB23005C9A66 /* AppBlockingInfoView.swift in Sources */,
-			);
+				E7C940C4C5DC45D2984CBE2A /* ConvexClient.swift in Sources */,
+				93AAE2F87CC24EA99AFD9F02 /* BackendSyncService.swift in Sources */,);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
 /* End PBXSourcesBuildPhase section */
